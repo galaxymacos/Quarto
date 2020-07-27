@@ -37,9 +37,9 @@ public class ChessPicker: MonoBehaviour
         else
         {
             Debug.Log($"Drop current chess to grid ({chessBoardCube.rowNum}, {chessBoardCube.colNum}");
-            if (ChessBoard.instance.board[chessBoardCube.rowNum, chessBoardCube.colNum] != null)
+            if (ChessBoard.instance.board[chessBoardCube.colNum, chessBoardCube.rowNum] != null)
             {
-                Debug.LogWarning($"There is always chess at the position ({chessBoardCube.rowNum}, {chessBoardCube.colNum}");
+                Debug.LogWarning($"There is always chess at the position ({chessBoardCube.colNum}, {chessBoardCube.rowNum}");
             }
             else
             {
@@ -53,6 +53,8 @@ public class ChessPicker: MonoBehaviour
 
 public class AIChessPlayer: MonoBehaviour
 {
+    
+    
     public ChessInfo PickChessForPlayer()
     {
         var chess = FindObjectsOfType<ChessInfo>()
@@ -61,6 +63,21 @@ public class AIChessPlayer: MonoBehaviour
     }
 
     public void PlaceChess()
+    {
+        var board = ChessBoard.instance.board;
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                if (board[i, j] == null)
+                {
+                    
+                }
+            }
+        }
+    }
+
+    public ChessInfo PickRandomChessForPlayer()
     {
         
     }
