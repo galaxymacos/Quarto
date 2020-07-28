@@ -21,11 +21,11 @@ public class ChessBoard : SerializedMonoBehaviour
 
     private void Start()
     {
-        OrganizeBoard();
+        RefreshBoard();
     }
 
 
-    public void OrganizeBoard()
+    public void RefreshBoard()
     {
         for (int i = 0; i < board.GetLength(0); i++)
         {

@@ -9,9 +9,12 @@ public class TurnManager : MonoBehaviour
     public TextMeshProUGUI dropCol;
     public TextMeshProUGUI dropRow;
 
-    public GameObject[] availableChess;
+    public State currentState;
+    private State prevState;
+    public event Action<State> onStateChange;
 
-    public GameObject currentPickedChess;
+    public AIChessPlayer aiPlayer;
+    
 
     private void Awake()
     {
@@ -19,16 +22,37 @@ public class TurnManager : MonoBehaviour
         {
             instance = this;
         }
+        
+        
     }
-    
-    
-    // Select Chess
+
+    private void Update()
+    {
+        if (currentState != prevState)
+        {
+            onStateChange?.Invoke(currentState);
+        }
+        prevState = currentState;
+    }
+
+    public void UpdateState(State newState)
+    {
+        currentState = newState;
+    }
+
+    private void Start()
+    {
+        aiPlayer.PickChessForPlayer();
+    }
+
+
+    // Player Select Chess
     public void OnConfirm()
     {
         int index = Convert.ToInt32(chessPickIndex.text);
-        if (availableChess[index] != null)
+        if (ChessBoard.instance.availableBlackChess[index] != null)
         {
-            currentPickedChess = availableChess[index];
+            ChessPlayer.instance.currentPickedChess = ChessBoard.instance.availableBlackChess[index];
         }
         else
         {
@@ -41,9 +65,16 @@ public class TurnManager : MonoBehaviour
     {
         if (ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] == null)
         {
-            ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] = currentPickedChess.GetComponent<ChessInfo>();
+            ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] = ChessPlayer.instance.currentPickedChess.GetComponent<ChessInfo>();
         }
     }
-    
-    
+
+
+    public enum State
+    {
+        AIPickForPlayer,
+        PlayerMove,
+        PlayerPickForAI,
+        AIMove
+    }
 }

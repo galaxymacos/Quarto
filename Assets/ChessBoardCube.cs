@@ -1,12 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ChessBoardCube: MonoBehaviour
 {
     public int rowNum;
-    public int colNum; 
+    public int colNum;
+
+    
     private void OnMouseDown()
     {
-        ChessPicker.instance.DropCurrentChessToGrid(this);
+        if (TurnManager.instance.currentState == TurnManager.State.PlayerMove)
+        {
+            ChessPlayer.instance.TryDropCurrentChessToGrid(this);
+            TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
+        }
     }
     
 }
