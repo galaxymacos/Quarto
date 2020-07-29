@@ -30,9 +30,15 @@ public class AIChessPlayer : MonoBehaviour
 
     public void PickChessForPlayer()
     {
-        var chess = ChessBoard.instance.availableWhiteChess;
-        ChessPlayer.instance.currentPickedChess = chess[Random.Range(0, chess.Count - 1)];
+        print("Pick Chess For Player");
+        int randomIndex = Random.Range(0, ChessBoard.instance.availableWhiteChess.Count);
+        ChessPlayer.instance.currentPickedChess = ChessBoard.instance.availableWhiteChess[randomIndex];
         TurnManager.instance.currentState = TurnManager.State.PlayerMove;
+        ChessBoard.instance.availableWhiteChess.RemoveAt(randomIndex);
+        if (ChessPlayer.instance.currentPickedChess == null)
+        {
+            Debug.LogError("AI didn't pick any chess for player");
+        }
         print("Player Move");
     }
 
@@ -78,6 +84,7 @@ public class AIChessPlayer : MonoBehaviour
     {
         for (int i = 0; i < b.GetLength(0); i++)
         {
+            if (b[i, 0] == null) continue;
             var baseShape = b[i, 0].baseShape;
             var height = b[i, 0].height;
             var hasCircleOnTop = b[i, 0].hasCircleOnTop;
@@ -115,6 +122,7 @@ public class AIChessPlayer : MonoBehaviour
 
         for (int i = 0; i < b.GetLength(0); i++)
         {
+            if (b[0,i] == null) continue;
             var baseShape = b[0, i].baseShape;
             var height = b[0, i].height;
             var hasCircleOnTop = b[0, i].hasCircleOnTop;
@@ -150,7 +158,7 @@ public class AIChessPlayer : MonoBehaviour
             }
         }
 
-        if (true)
+        if (b[0, 0] != null)
         {
             var baseShape = b[0, 0].baseShape;
             var height = b[0, 0].height;
@@ -187,7 +195,7 @@ public class AIChessPlayer : MonoBehaviour
             }
         }
 
-        if (true)
+        if (b[0, b.GetLength(0) - 1]!=null)
         {
             var baseShape = b[0, b.GetLength(0) - 1].baseShape;
             var height = b[0, b.GetLength(0) - 1].height;

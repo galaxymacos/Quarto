@@ -14,6 +14,11 @@ public class ChessBoardCube: MonoBehaviour
             ChessPlayer.instance.TryDropCurrentChessToGrid(this);
             TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
         }
+        else
+        {
+            print("It is not player's turn");
+        }
+
     }
     
 }
