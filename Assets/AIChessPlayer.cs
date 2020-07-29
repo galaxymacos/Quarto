@@ -9,6 +9,7 @@ public class AIChessPlayer : MonoBehaviour
 {
     public static AIChessPlayer instance;
     public ChessInfo currentPickChess;
+    public int searchDepth;
 
     private void Awake()
     {
@@ -32,14 +33,15 @@ public class AIChessPlayer : MonoBehaviour
     {
         print("Pick Chess For Player");
         int randomIndex = Random.Range(0, ChessBoard.instance.availableWhiteChess.Count);
-        ChessPlayer.instance.currentPickedChess = ChessBoard.instance.availableWhiteChess[randomIndex];
-        TurnManager.instance.currentState = TurnManager.State.PlayerMove;
+        ChessPlayer.instance.currentPickChess = ChessBoard.instance.availableWhiteChess[randomIndex];
+        print(ChessBoard.instance.availableBlackChess.Count);
         ChessBoard.instance.availableWhiteChess.RemoveAt(randomIndex);
-        if (ChessPlayer.instance.currentPickedChess == null)
+        if (ChessPlayer.instance.currentPickChess == null)
         {
             Debug.LogError("AI didn't pick any chess for player");
         }
-        print("Player Move");
+        TurnManager.instance.currentState = TurnManager.State.PlayerMove;
+        print(ChessBoard.instance.availableBlackChess.Count);
     }
 
     private IEnumerator PlaceChess()
@@ -49,6 +51,7 @@ public class AIChessPlayer : MonoBehaviour
         var bestMove = findBestMove(ChessBoard.instance.board);
         ChessBoard.instance.board[bestMove.row, bestMove.col] = bestMove.chess;
         ChessBoard.instance.RefreshBoard();
+        ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
         currentPickChess = null;
         TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
     }
@@ -237,8 +240,8 @@ public class AIChessPlayer : MonoBehaviour
 
     public int MiniMax(ChessInfo[,] board, int depth, bool isMax)
     {
-        // Max depth is 3
-        if (depth >= 3)
+        // Max depth is set in main menu
+        if (depth >= searchDepth)
             return 0;
         
         int score = Evaluate(board);
@@ -260,7 +263,11 @@ public class AIChessPlayer : MonoBehaviour
                     if (board[i, j] == null)
                     {
                             board[i, j] = currentPickChess;
-                            ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
+                            ChessBoard.instance.availableBlackChess.Remove(board[i,j]);
+                            // Help opponent to pick chess
+                            ChessPlayer.instance.currentPickChess =
+                                ChessBoard.instance.availableWhiteChess[
+                                    Random.Range(0, ChessBoard.instance.availableWhiteChess.Count)];
                             best = Mathf.Max(best, MiniMax(board, depth + 1, false));
                             ChessBoard.instance.availableBlackChess.Add(board[i, j]);
                             board[i, j] = null;
@@ -280,8 +287,11 @@ public class AIChessPlayer : MonoBehaviour
                 {
                     if (board[i, j] == null)
                     {
-                            board[i, j] = ChessPlayer.instance.currentPickedChess;
-                            ChessBoard.instance.availableWhiteChess.Remove(currentPickChess);
+                            board[i, j] = ChessPlayer.instance.currentPickChess;
+                            ChessBoard.instance.availableWhiteChess.Remove(board[i,j]);
+                            currentPickChess =
+                                ChessBoard.instance.availableBlackChess[
+                                    Random.Range(0, ChessBoard.instance.availableBlackChess.Count)];
                             best = Mathf.Max(best, MiniMax(board, depth + 1, true));
                             ChessBoard.instance.availableWhiteChess.Add(board[i, j]);
                             board[i, j] = null;

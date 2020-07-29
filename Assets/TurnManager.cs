@@ -52,7 +52,7 @@ public class TurnManager : MonoBehaviour
         int index = Convert.ToInt32(chessPickIndex.text);
         if (ChessBoard.instance.availableBlackChess[index] != null)
         {
-            ChessPlayer.instance.currentPickedChess = ChessBoard.instance.availableBlackChess[index];
+            ChessPlayer.instance.currentPickChess = ChessBoard.instance.availableBlackChess[index];
         }
         else
         {
@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
     {
         if (ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] == null)
         {
-            ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] = ChessPlayer.instance.currentPickedChess.GetComponent<ChessInfo>();
+            ChessBoard.instance.board[Convert.ToInt32(dropRow), Convert.ToInt32(dropCol)] = ChessPlayer.instance.currentPickChess.GetComponent<ChessInfo>();
         }
     }
 

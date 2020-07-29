@@ -4,7 +4,7 @@ public class ChessPlayer: MonoBehaviour
 {
     public static ChessPlayer instance;
 
-    public ChessInfo currentPickedChess;
+    public ChessInfo currentPickChess;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class ChessPlayer: MonoBehaviour
 
     public void TryDropCurrentChessToGrid(ChessBoardCube chessBoardCube)
     {
-        if (currentPickedChess == null)
+        if (currentPickChess == null)
         {
             Debug.LogWarning("The player hasn't picked up any chess");
         }
@@ -42,9 +42,9 @@ public class ChessPlayer: MonoBehaviour
             }
             else
             {
-                ChessBoard.instance.board[chessBoardCube.colNum, chessBoardCube.rowNum] = currentPickedChess;
+                ChessBoard.instance.board[chessBoardCube.colNum, chessBoardCube.rowNum] = currentPickChess;
                 ChessBoard.instance.RefreshBoard();
-                currentPickedChess = null;
+                currentPickChess = null;
                 TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
             }
         }
