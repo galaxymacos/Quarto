@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class ChessInfo : MonoBehaviour
 {
-    public int length;
+    public int height;
 
     public bool hasCircleOnTop;
 

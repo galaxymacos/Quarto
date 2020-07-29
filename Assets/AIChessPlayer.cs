@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Packages.Rider.Editor.UnitTesting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class AIChessPlayer: MonoBehaviour
+public class AIChessPlayer : MonoBehaviour
 {
-
     public static AIChessPlayer instance;
     public ChessInfo currentPickChess;
 
@@ -31,28 +31,30 @@ public class AIChessPlayer: MonoBehaviour
     public void PickChessForPlayer()
     {
         var chess = ChessBoard.instance.availableWhiteChess;
-        ChessPlayer.instance.currentPickedChess = chess[Random.Range(0, chess.Length - 1)];
+        ChessPlayer.instance.currentPickedChess = chess[Random.Range(0, chess.Count - 1)];
         TurnManager.instance.currentState = TurnManager.State.PlayerMove;
         print("Player Move");
     }
 
-    public IEnumerator PlaceChess()
+    private IEnumerator PlaceChess()
     {
-        yield return new WaitForSeconds(1f);
-        var board = ChessBoard.instance.board;
-        for (int i = 0; i < board.GetLength(0); i++)
-        {
-            for (int j = 0; j < board.GetLength(1); j++)
-            {
-                if (board[i, j] == null)
-                {
-                    board[i, j] = currentPickChess;
-                    ChessBoard.instance.RefreshBoard();
-                    currentPickChess = null;
-                    TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
-                }
-            }
-        }
+        // yield return new WaitForSeconds(1f);
+        // var board = ChessBoard.instance.board;
+        // for (int i = 0; i < board.GetLength(0); i++)
+        // {
+        //     for (int j = 0; j < board.GetLength(1); j++)
+        //     {
+        //         if (board[i, j] == null)
+        //         {
+        //             board[i, j] = currentPickChess;
+        //             ChessBoard.instance.RefreshBoard();
+        //             currentPickChess = null;
+        //             TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
+        //         }
+        //     }
+        // }
+
+        var bestMove = findBestMove(ChessBoard.instance.board);
     }
 
     private void React(TurnManager.State newState)
@@ -66,7 +68,273 @@ public class AIChessPlayer: MonoBehaviour
                 StartCoroutine(PlaceChess());
                 break;
         }
-        
+    }
+
+    public bool hasMoveLeft()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (ChessBoard.instance.board[i, j] == null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int Evaluate(ChessInfo[,] b)
+    {
+        for (int i = 0; i < b.GetLength(0); i++)
+        {
+            var baseShape = b[i, 0].baseShape;
+            var height = b[i, 0].height;
+            var hasCircleOnTop = b[i, 0].hasCircleOnTop;
+            var color = b[i, 0].chessColor;
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[i, j].baseShape != baseShape)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[i, j].height != height)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[i, j].hasCircleOnTop != hasCircleOnTop)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+        }
+
+        for (int i = 0; i < b.GetLength(0); i++)
+        {
+            var baseShape = b[0, i].baseShape;
+            var height = b[0, i].height;
+            var hasCircleOnTop = b[0, i].hasCircleOnTop;
+            var color = b[0, i].chessColor;
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[j, i].baseShape != baseShape)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[j, i].height != height)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(1); j++)
+            {
+                if (b[j, i].hasCircleOnTop != hasCircleOnTop)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+        }
+
+        if (true)
+        {
+            var baseShape = b[0, 0].baseShape;
+            var height = b[0, 0].height;
+            var hasCircleOnTop = b[0, 0].hasCircleOnTop;
+            var color = b[0, 0].chessColor;
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[j, j].baseShape != baseShape)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[j, j].height != height)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[j, j].hasCircleOnTop != hasCircleOnTop)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+        }
+
+        if (true)
+        {
+            var baseShape = b[0, b.GetLength(0) - 1].baseShape;
+            var height = b[0, b.GetLength(0) - 1].height;
+            var hasCircleOnTop = b[0, b.GetLength(0) - 1].hasCircleOnTop;
+            var color = b[0, b.GetLength(0) - 1].chessColor;
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[0, b.GetLength(0) - 1 - j].baseShape != baseShape)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[0, b.GetLength(0) - 1 - j].height != height)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+
+            for (int j = 0; j < b.GetLength(0); j++)
+            {
+                if (b[0, b.GetLength(0) - 1 - j].hasCircleOnTop != hasCircleOnTop)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    return color == ChessColor.Black ? 1000 : -1000;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public int MiniMax(ChessInfo[,] board, int depth, bool isMax)
+    {
+        int score = Evaluate(board);
+
+        if (score == 1000 || score == -1000)
+            return score;
+
+        if (!hasMoveLeft())
+            return 0;
+
+        if (isMax)
+        {
+            int best = -1000;
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (board[i, j] == null)
+                    {
+                            board[i, j] = currentPickChess;
+                            ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
+                            best = Mathf.Max(best, MiniMax(board, depth + 1, false));
+                            ChessBoard.instance.availableBlackChess.Add(board[i, j]);
+                            board[i, j] = null;
+                    }
+                }
+            }
+
+            return best;
+        }
+        else
+        {
+            int best = 1000;
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (board[i, j] == null)
+                    {
+                            board[i, j] = currentPickChess;
+                            ChessBoard.instance.availableWhiteChess.Remove(currentPickChess);
+                            best = Mathf.Max(best, MiniMax(board, depth + 1, true));
+                            ChessBoard.instance.availableWhiteChess.Add(board[i, j]);
+                            board[i, j] = null;
+                    }
+                }
+            }
+
+            return best;
+        }
+    }
+
+    public class Move
+    {
+        public int row;
+        public int col;
+        public ChessInfo chess;
+    }
+
+    public Move findBestMove(ChessInfo[,] board)
+    {
+        int bestVal = -1000;
+        Move bestMove = new Move();
+        bestMove.row = -1;
+        bestMove.col = -1;
+
+        // Traverse all cells, evaluate minimax function  
+        // for all empty cells. And return the cell  
+        // with optimal value. 
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                // Check if cell is empty 
+                if (board[i, j] == null)
+                {
+                    board[i, j] = currentPickChess;
+                    ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
+                    int moveVal = MiniMax(board, 0, false);
+
+                    ChessBoard.instance.availableBlackChess.Add(currentPickChess);
+
+                    if (moveVal > bestVal)
+                    {
+                        bestMove.row = i;
+                        bestMove.col = j;
+                        bestMove.chess = board[i, j];
+                        bestVal = moveVal;
+                    }
+
+                    board[i, j] = null;
+                }
+            }
+        }
+
+
+        return bestMove;
     }
 }
-

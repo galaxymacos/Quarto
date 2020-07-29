@@ -6,8 +6,8 @@ using UnityEngine;
 public class ChessBoard : SerializedMonoBehaviour
 {
     public static ChessBoard instance;
-    public ChessInfo[] availableWhiteChess;
-    public ChessInfo[] availableBlackChess;
+    public List<ChessInfo> availableWhiteChess;
+    public List<ChessInfo> availableBlackChess;
     public ChessInfo[,] board = new ChessInfo[4,4];
     public Transform[,] cellPoses = new Transform[4,4];
 
