@@ -38,23 +38,13 @@ public class AIChessPlayer : MonoBehaviour
 
     private IEnumerator PlaceChess()
     {
-        // yield return new WaitForSeconds(1f);
-        // var board = ChessBoard.instance.board;
-        // for (int i = 0; i < board.GetLength(0); i++)
-        // {
-        //     for (int j = 0; j < board.GetLength(1); j++)
-        //     {
-        //         if (board[i, j] == null)
-        //         {
-        //             board[i, j] = currentPickChess;
-        //             ChessBoard.instance.RefreshBoard();
-        //             currentPickChess = null;
-        //             TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
-        //         }
-        //     }
-        // }
+        yield return new WaitForSeconds(1f);
 
         var bestMove = findBestMove(ChessBoard.instance.board);
+        ChessBoard.instance.board[bestMove.row, bestMove.col] = bestMove.chess;
+        ChessBoard.instance.RefreshBoard();
+        currentPickChess = null;
+        TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
     }
 
     private void React(TurnManager.State newState)
@@ -94,7 +84,7 @@ public class AIChessPlayer : MonoBehaviour
             var color = b[i, 0].chessColor;
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[i, j].baseShape != baseShape)
+                if (b[i,j] != null && b[i, j].baseShape != baseShape)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -104,7 +94,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[i, j].height != height)
+                if (b[i,j] != null && b[i, j].height != height)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -114,7 +104,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[i, j].hasCircleOnTop != hasCircleOnTop)
+                if (b[i,j] != null && b[i, j].hasCircleOnTop != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -131,7 +121,7 @@ public class AIChessPlayer : MonoBehaviour
             var color = b[0, i].chessColor;
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[j, i].baseShape != baseShape)
+                if (b[j,i] != null && b[j, i].baseShape != baseShape)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -141,7 +131,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[j, i].height != height)
+                if (b[j,i] != null && b[j, i].height != height)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -151,7 +141,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[j, i].hasCircleOnTop != hasCircleOnTop)
+                if (b[j,i] != null && b[j, i].hasCircleOnTop != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -168,7 +158,7 @@ public class AIChessPlayer : MonoBehaviour
             var color = b[0, 0].chessColor;
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, j].baseShape != baseShape)
+                if (b[j,j] != null &&b[j, j].baseShape != baseShape)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -178,7 +168,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, j].height != height)
+                if (b[j,j] != null && b[j, j].height != height)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -188,7 +178,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, j].hasCircleOnTop != hasCircleOnTop)
+                if (b[j,j] != null && b[j, j].hasCircleOnTop != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -205,7 +195,7 @@ public class AIChessPlayer : MonoBehaviour
             var color = b[0, b.GetLength(0) - 1].chessColor;
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[0, b.GetLength(0) - 1 - j].baseShape != baseShape)
+                if (b[j,b.GetLength(0)-1-j] != null && b[j, b.GetLength(0) - 1 - j].baseShape != baseShape)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -215,7 +205,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[0, b.GetLength(0) - 1 - j].height != height)
+                if (b[j,b.GetLength(0)-1-j]!=null && b[j, b.GetLength(0) - 1 - j].height != height)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -225,7 +215,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[0, b.GetLength(0) - 1 - j].hasCircleOnTop != hasCircleOnTop)
+                if (b[j,b.GetLength(0)-1-j]!=null && b[j, b.GetLength(0) - 1 - j].hasCircleOnTop != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -239,6 +229,10 @@ public class AIChessPlayer : MonoBehaviour
 
     public int MiniMax(ChessInfo[,] board, int depth, bool isMax)
     {
+        // Max depth is 3
+        if (depth >= 3)
+            return 0;
+        
         int score = Evaluate(board);
 
         if (score == 1000 || score == -1000)
@@ -278,7 +272,7 @@ public class AIChessPlayer : MonoBehaviour
                 {
                     if (board[i, j] == null)
                     {
-                            board[i, j] = currentPickChess;
+                            board[i, j] = ChessPlayer.instance.currentPickedChess;
                             ChessBoard.instance.availableWhiteChess.Remove(currentPickChess);
                             best = Mathf.Max(best, MiniMax(board, depth + 1, true));
                             ChessBoard.instance.availableWhiteChess.Add(board[i, j]);
@@ -300,6 +294,7 @@ public class AIChessPlayer : MonoBehaviour
 
     public Move findBestMove(ChessInfo[,] board)
     {
+        print("AI is thinking...");
         int bestVal = -1000;
         Move bestMove = new Move();
         bestMove.row = -1;
@@ -335,6 +330,7 @@ public class AIChessPlayer : MonoBehaviour
         }
 
 
+        print("AI finished thinking...");
         return bestMove;
     }
 }
