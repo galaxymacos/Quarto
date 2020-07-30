@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 273005584}
   - component: {fileID: 273005583}
   - component: {fileID: 273005582}
+  - component: {fileID: 273005585}
   m_Layer: 5
   m_Name: Btn Impossible
   m_TagString: Untagged
@@ -855,7 +856,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 273005583}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 273005585}
+        m_MethodName: OnClick_SetAIDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 960848790}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &273005583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,6 +916,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273005580}
   m_CullTransparentMesh: 0
+--- !u!114 &273005585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273005580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86809f364de3d0e4b81822e9a93b4396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depth: 0
 --- !u!1 &378432501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2839971301890762658, guid: 0db1e4d0756e0d744824ff651ebc694e,
@@ -2558,7 +2594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8cad46518646e48627e0211a335d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPickedChess: {fileID: 0}
+  currentPickChess: {fileID: 0}
 --- !u!4 &1138679912
 Transform:
   m_ObjectHideFlags: 0
@@ -2885,11 +2921,11 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 960848790}
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4378,7 +4414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1785028544
 RectTransform:
   m_ObjectHideFlags: 0
