@@ -11,7 +11,7 @@ public class ChessInfo : MonoBehaviour
 
     public ChessBaseShape baseShape;
 
-    public ChessColor chessColor;
+    public ChessType chessType;
 
     public bool isOnBoard;
 
@@ -22,8 +22,9 @@ public enum ChessBaseShape
     Square, Cylinder
 }
 
-public enum ChessColor
+public enum ChessType
 {
     Black,
-    White
+    White,
+    Null
 }

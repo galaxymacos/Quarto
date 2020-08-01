@@ -12,7 +12,6 @@ public class ChessBoardCube: MonoBehaviour
         if (TurnManager.instance.currentState == TurnManager.State.PlayerMove)
         {
             ChessPlayer.instance.TryDropCurrentChessToGrid(this);
-            TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
         }
         else
         {

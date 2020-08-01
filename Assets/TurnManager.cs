@@ -75,6 +75,8 @@ public class TurnManager : MonoBehaviour
         AIPickForPlayer,
         PlayerMove,
         PlayerPickForAI,
-        AIMove
+        AIMove,
+        PlayerWin,
+        AIWin
     }
 }

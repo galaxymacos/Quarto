@@ -12,7 +12,7 @@ public class EnemyChess : MonoBehaviour
         if (TurnManager.instance.currentState == TurnManager.State.PlayerPickForAI)
         {
             AIChessPlayer.instance.currentPickChess = GetComponent<ChessInfo>();
-            Debug.Log("Pick chess for enemy, now it is enemy's turn");
+            ChessBoard.instance.availableBlackChess.Remove(GetComponent<ChessInfo>());
             TurnManager.instance.currentState = TurnManager.State.AIMove;
         }
         else
