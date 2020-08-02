@@ -1125,6 +1125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 5
+  difficulty: 0
 --- !u!1 &414621058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,7 +1767,7 @@ GameObject:
   - component: {fileID: 756730871}
   - component: {fileID: 756730874}
   m_Layer: 5
-  m_Name: Btn Medium
+  m_Name: Btn Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1918,6 +1919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 3
+  difficulty: 1
 --- !u!1001 &792837637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2962,6 +2964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 2
+  difficulty: 0
 --- !u!1 &1118560996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3742,6 +3745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 4
+  difficulty: 2
 --- !u!1 &1362509645
 GameObject:
   m_ObjectHideFlags: 0

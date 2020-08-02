@@ -231,4 +231,20 @@ public class ChessBoard : SerializedMonoBehaviour
 
         return true;
     }
+    
+    
+
+    public (int, int) AnyEmptySpace()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (board[i, j] == null)
+                    return (i, j);
+            }
+        }
+
+        return (-1, -1);
+    }
 }
