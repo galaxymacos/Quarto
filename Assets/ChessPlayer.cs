@@ -35,6 +35,7 @@ public class ChessPlayer : MonoBehaviour
         if (ChessBoard.instance.CheckVictoryCondition(ChessBoard.instance.board) == ChessType.White)
         {
             print("Player Win");
+            GameOverText.instance.ActivateText(ChessType.White);
             return;
         }
         TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;

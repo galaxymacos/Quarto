@@ -50,6 +50,7 @@ public class AIChessPlayer : MonoBehaviour
         if (ChessBoard.instance.IsFull())
         {
             print("Board is full, game over, no winner");
+            GameOverText.instance.ActivateText(ChessType.Null);
             return;
         }
 
@@ -57,11 +58,15 @@ public class AIChessPlayer : MonoBehaviour
         {
             case ChessType.Black:
                 print("AI wins");
+                GameOverText.instance.ActivateText(ChessType.Black);
                 break;
             case ChessType.White:
                 print("Player wins");
+                GameOverText.instance.ActivateText(ChessType.White);
                 break;
+
         }
+
 
         var value = QuickAlgorithm.CalThreatValue();
         Move bestMove = new Move();

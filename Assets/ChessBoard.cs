@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class ChessBoard : SerializedMonoBehaviour
@@ -10,6 +11,7 @@ public class ChessBoard : SerializedMonoBehaviour
     public List<ChessInfo> availableBlackChess;
     public ChessInfo[,] board = new ChessInfo[4, 4];
     public Transform[,] cellPoses = new Transform[4, 4];
+    public GameObject gameOverText;
 
     private void Awake()
     {
