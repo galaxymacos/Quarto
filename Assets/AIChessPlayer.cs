@@ -32,15 +32,14 @@ public class AIChessPlayer : MonoBehaviour
     public void PickChessForPlayer()
     {
         print("Pick Chess For Player");
-        int randomIndex = Random.Range(0, ChessBoard.instance.availableWhiteChess.Count);
         if (ChessBoard.instance.availableWhiteChess.Count == 0)
         {
             print("There is no more chess available");
             print("Game over");
             return;
         }
-        ChessPlayer.instance.currentPickChess = ChessBoard.instance.availableWhiteChess[randomIndex];
-        ChessBoard.instance.availableWhiteChess.RemoveAt(randomIndex);
+        ChessPlayer.instance.currentPickChess = ChessBoard.instance.availableWhiteChess[0];
+        ChessBoard.instance.availableWhiteChess.RemoveAt(0);
         TurnManager.instance.currentState = TurnManager.State.PlayerMove;
     }
 
@@ -103,7 +102,7 @@ public class AIChessPlayer : MonoBehaviour
             if (ChessBoard.instance.board[i, 0] == null) continue;
             var baseShape = ChessBoard.instance.board[i, 0].baseShape;
             var height = ChessBoard.instance.board[i, 0].height;
-            var hasCircleOnTop = ChessBoard.instance.board[i, 0].hasCircleOnTop;
+            var isConcave = ChessBoard.instance.board[i, 0].IsConcave;
             var color = ChessBoard.instance.board[i, 0].chessType;
             for (int j = 0; j < ChessBoard.instance.board.GetLength(1); j++)
             {
@@ -129,7 +128,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < ChessBoard.instance.board.GetLength(1); j++)
             {
-                if (ChessBoard.instance.board[i, j] == null || ChessBoard.instance.board[i, j].hasCircleOnTop != hasCircleOnTop)
+                if (ChessBoard.instance.board[i, j] == null || ChessBoard.instance.board[i, j].IsConcave != isConcave)
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
@@ -143,7 +142,7 @@ public class AIChessPlayer : MonoBehaviour
             if (ChessBoard.instance.board[0, i] == null) continue;
             var baseShape = ChessBoard.instance.board[0, i].baseShape;
             var height = ChessBoard.instance.board[0, i].height;
-            var hasCircleOnTop = ChessBoard.instance.board[0, i].hasCircleOnTop;
+            var hasCircleOnTop = ChessBoard.instance.board[0, i].IsConcave;
             var color = ChessBoard.instance.board[0, i].chessType;
             for (int j = 0; j < ChessBoard.instance.board.GetLength(1); j++)
             {
@@ -167,7 +166,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < ChessBoard.instance.board.GetLength(1); j++)
             {
-                if (ChessBoard.instance.board[j, i] == null || ChessBoard.instance.board[j, i].hasCircleOnTop != hasCircleOnTop)
+                if (ChessBoard.instance.board[j, i] == null || ChessBoard.instance.board[j, i].IsConcave != hasCircleOnTop)
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
@@ -180,7 +179,7 @@ public class AIChessPlayer : MonoBehaviour
         {
             var baseShape = ChessBoard.instance.board[0, 0].baseShape;
             var height = ChessBoard.instance.board[0, 0].height;
-            var hasCircleOnTop = ChessBoard.instance.board[0, 0].hasCircleOnTop;
+            var hasCircleOnTop = ChessBoard.instance.board[0, 0].IsConcave;
             var color = ChessBoard.instance.board[0, 0].chessType;
             for (int j = 1; j < ChessBoard.instance.board.GetLength(0); j++)
             {
@@ -204,7 +203,7 @@ public class AIChessPlayer : MonoBehaviour
 
             for (int j = 0; j < ChessBoard.instance.board.GetLength(0); j++)
             {
-                if (ChessBoard.instance.board[j, j] == null || ChessBoard.instance.board[j, j].hasCircleOnTop != hasCircleOnTop)
+                if (ChessBoard.instance.board[j, j] == null || ChessBoard.instance.board[j, j].IsConcave != hasCircleOnTop)
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
@@ -217,7 +216,7 @@ public class AIChessPlayer : MonoBehaviour
         {
             var baseShape = ChessBoard.instance.board[0, ChessBoard.instance.board.GetLength(0) - 1].baseShape;
             var height = ChessBoard.instance.board[0, ChessBoard.instance.board.GetLength(0) - 1].height;
-            var hasCircleOnTop = ChessBoard.instance.board[0, ChessBoard.instance.board.GetLength(0) - 1].hasCircleOnTop;
+            var isConcave = ChessBoard.instance.board[0, ChessBoard.instance.board.GetLength(0) - 1].IsConcave;
             var color = ChessBoard.instance.board[0, ChessBoard.instance.board.GetLength(0) - 1].chessType;
             for (int j = 0; j < ChessBoard.instance.board.GetLength(0); j++)
             {
@@ -242,7 +241,7 @@ public class AIChessPlayer : MonoBehaviour
             for (int j = 0; j < ChessBoard.instance.board.GetLength(0); j++)
             {
                 if (ChessBoard.instance.board[j, ChessBoard.instance.board.GetLength(0) - 1 - j] == null ||
-                    ChessBoard.instance.board[j, ChessBoard.instance.board.GetLength(0) - 1 - j].hasCircleOnTop != hasCircleOnTop)
+                    ChessBoard.instance.board[j, ChessBoard.instance.board.GetLength(0) - 1 - j].IsConcave != isConcave)
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {

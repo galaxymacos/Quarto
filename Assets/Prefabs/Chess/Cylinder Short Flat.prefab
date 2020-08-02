@@ -88,8 +88,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8998887898389678693}
+  - component: {fileID: 8533881192734623954}
   m_Layer: 0
-  m_Name: polySurface4
+  m_Name: Cylinder Short Flat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,3 +111,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8533881192734623954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8622608165258940639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68075f9580fbbe4ea575725194a8183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 0
+  IsConcave: 0
+  baseShape: 0
+  chessType: 0

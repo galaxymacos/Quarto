@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ChessInfo : MonoBehaviour
 {
     public int height;
 
-    public bool hasCircleOnTop;
+    public bool IsConcave;
 
     public ChessBaseShape baseShape;
 
     public ChessType chessType;
+    
+    public GameObject indicateLight;
 
-    public bool isOnBoard;
-
+   
 }
 
 public enum ChessBaseShape
 {
-    Square, Cylinder
+    Cube, Cylinder
 }
+
+
 
 public enum ChessType
 {
@@ -28,3 +29,4 @@ public enum ChessType
     White,
     Null
 }
+

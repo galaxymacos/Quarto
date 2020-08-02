@@ -47,7 +47,7 @@ public class ChessBoard : SerializedMonoBehaviour
             if (b[i, 0] == null) continue;
             var baseShape = b[i, 0].baseShape;
             var height = b[i, 0].height;
-            var hasCircleOnTop = b[i, 0].hasCircleOnTop;
+            var hasCircleOnTop = b[i, 0].IsConcave;
             var color = b[i, 0].chessType;
             for (int j = 0; j < b.GetLength(1); j++)
             {
@@ -71,7 +71,7 @@ public class ChessBoard : SerializedMonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[i, j] != null && b[i, j].hasCircleOnTop != hasCircleOnTop)
+                if (b[i, j] != null && b[i, j].IsConcave != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -85,7 +85,7 @@ public class ChessBoard : SerializedMonoBehaviour
             if (b[0, i] == null) continue;
             var baseShape = b[0, i].baseShape;
             var height = b[0, i].height;
-            var hasCircleOnTop = b[0, i].hasCircleOnTop;
+            var hasCircleOnTop = b[0, i].IsConcave;
             var color = b[0, i].chessType;
             for (int j = 0; j < b.GetLength(1); j++)
             {
@@ -109,7 +109,7 @@ public class ChessBoard : SerializedMonoBehaviour
 
             for (int j = 0; j < b.GetLength(1); j++)
             {
-                if (b[j, i] != null && b[j, i].hasCircleOnTop != hasCircleOnTop)
+                if (b[j, i] != null && b[j, i].IsConcave != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -122,7 +122,7 @@ public class ChessBoard : SerializedMonoBehaviour
         {
             var baseShape = b[0, 0].baseShape;
             var height = b[0, 0].height;
-            var hasCircleOnTop = b[0, 0].hasCircleOnTop;
+            var hasCircleOnTop = b[0, 0].IsConcave;
             var color = b[0, 0].chessType;
             for (int j = 0; j < b.GetLength(0); j++)
             {
@@ -146,7 +146,7 @@ public class ChessBoard : SerializedMonoBehaviour
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, j] != null && b[j, j].hasCircleOnTop != hasCircleOnTop)
+                if (b[j, j] != null && b[j, j].IsConcave != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
@@ -159,7 +159,7 @@ public class ChessBoard : SerializedMonoBehaviour
         {
             var baseShape = b[0, b.GetLength(0) - 1].baseShape;
             var height = b[0, b.GetLength(0) - 1].height;
-            var hasCircleOnTop = b[0, b.GetLength(0) - 1].hasCircleOnTop;
+            var hasCircleOnTop = b[0, b.GetLength(0) - 1].IsConcave;
             ChessType color = b[0, b.GetLength(0) - 1].chessType;
             for (int j = 0; j < b.GetLength(0); j++)
             {
@@ -184,7 +184,7 @@ public class ChessBoard : SerializedMonoBehaviour
             for (int j = 0; j < b.GetLength(0); j++)
             {
                 if (b[j, b.GetLength(0) - 1 - j] != null &&
-                    b[j, b.GetLength(0) - 1 - j].hasCircleOnTop != hasCircleOnTop)
+                    b[j, b.GetLength(0) - 1 - j].IsConcave != hasCircleOnTop)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
