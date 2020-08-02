@@ -51,11 +51,27 @@ public class AIChessPlayer : MonoBehaviour
             print("Board is full, game over, no winner");
             return;
         }
+
+        switch (ChessBoard.instance.CheckVictoryCondition(ChessBoard.instance.board))
+        {
+            case ChessType.Black:
+                print("AI wins");
+                break;
+            case ChessType.White:
+                print("Player wins");
+                break;
+        }
         // TODO add it back
         var bestMove = FindBestMove();
         ChessBoard.instance.board[bestMove.row, bestMove.col] = currentPickChess;
         ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
         ChessBoard.instance.RefreshBoard();
+        if(ChessBoard.instance.CheckVictoryCondition(ChessBoard.instance.board) == ChessType.Black)
+        {
+            print("AI wins, game over");
+            TurnManager.instance.currentState = TurnManager.State.AIWin;
+            return;
+        }
         TurnManager.instance.currentState = TurnManager.State.AIPickForPlayer;
         PickChessForPlayer();
 
@@ -104,7 +120,9 @@ public class AIChessPlayer : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                // top left
+                if (ChessBoard.instance.board[i, j] == null)
+                {
+                    // top left
                 if (i >= 1 && j >= 1)
                 {
                     if (ChessBoard.instance.board[i - 1, j - 1] != null)
@@ -183,6 +201,8 @@ public class AIChessPlayer : MonoBehaviour
                         continue;
                     }
                 }
+                }
+                
                 
             }
         }

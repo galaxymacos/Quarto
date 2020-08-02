@@ -42,153 +42,175 @@ public class ChessBoard : SerializedMonoBehaviour
     
     public ChessType CheckVictoryCondition(ChessInfo[,] b)
     {
-        for (int i = 0; i < b.GetLength(0); i++)
+        // check each coloum
+        for (int i = 0; i < 4; i++)
         {
             if (b[i, 0] == null) continue;
             var baseShape = b[i, 0].baseShape;
             var height = b[i, 0].height;
-            var hasCircleOnTop = b[i, 0].IsConcave;
-            var color = b[i, 0].chessType;
-            for (int j = 0; j < b.GetLength(1); j++)
+            var isConcave = b[i, 0].IsConcave;
+            var chessType = b[i, 0].chessType;
+
+            for (int j = 1; j < 4; j++)
             {
-                if (b[i, j] != null && b[i, j].baseShape != baseShape)
+                if (b[i, j] == null) break;
+                
+                if (b[i, j].baseShape != baseShape)
+                    break;
+
+                if (b[i, j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
+                }
+            }
+            
+
+            for (int j = 1; j < 4; j++)
+            {
+                if (b[i, j] == null || b[i, j].height != height || b[i,j].chessType != chessType)
+                    break;
+                if (j == b.GetLength(1) - 1)
+                {
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
-            for (int j = 0; j < b.GetLength(1); j++)
+            for (int j = 0; j < 4; j++)
             {
-                if (b[i, j] != null && b[i, j].height != height)
+                if (b[i, j] == null || b[i, j].IsConcave != isConcave || b[i,j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
-                }
-            }
-
-            for (int j = 0; j < b.GetLength(1); j++)
-            {
-                if (b[i, j] != null && b[i, j].IsConcave != hasCircleOnTop)
-                    break;
-                if (j == b.GetLength(1) - 1)
-                {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
         }
 
-        for (int i = 0; i < b.GetLength(0); i++)
+        for (int i = 0; i < 4; i++)
         {
             if (b[0, i] == null) continue;
             var baseShape = b[0, i].baseShape;
             var height = b[0, i].height;
             var hasCircleOnTop = b[0, i].IsConcave;
-            var color = b[0, i].chessType;
-            for (int j = 0; j < b.GetLength(1); j++)
+            var chessType = b[0, i].chessType;
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, i] != null && b[j, i].baseShape != baseShape)
+                if (b[j, i] == null || b[j, i].baseShape != baseShape || b[j,i].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
-            for (int j = 0; j < b.GetLength(1); j++)
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, i] != null && b[j, i].height != height)
+                if (b[j, i] == null || b[j, i].height != height || b[j,i].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
-            for (int j = 0; j < b.GetLength(1); j++)
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, i] != null && b[j, i].IsConcave != hasCircleOnTop)
+                if (b[j, i] == null || b[j, i].IsConcave != hasCircleOnTop || b[j,i].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
         }
 
+        // 正对角线
         if (b[0, 0] != null)
         {
             var baseShape = b[0, 0].baseShape;
             var height = b[0, 0].height;
             var hasCircleOnTop = b[0, 0].IsConcave;
-            var color = b[0, 0].chessType;
-            for (int j = 0; j < b.GetLength(0); j++)
+            var chessType = b[0, 0].chessType;
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, j] != null && b[j, j].baseShape != baseShape)
+                if (b[j, j] == null || b[j, j].baseShape != baseShape || b[j,j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
-            for (int j = 0; j < b.GetLength(0); j++)
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, j] != null && b[j, j].height != height)
+                if (b[j, j] == null || b[j, j].height != height || b[j,j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
-            for (int j = 0; j < b.GetLength(0); j++)
+            for (int j = 1; j < 4; j++)
             {
-                if (b[j, j] != null && b[j, j].IsConcave != hasCircleOnTop)
+                if (b[j, j] == null || b[j, j].IsConcave != hasCircleOnTop || b[j,j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
         }
 
+        // 反对角线
         if (b[0, b.GetLength(0) - 1] != null)
         {
             var baseShape = b[0, b.GetLength(0) - 1].baseShape;
             var height = b[0, b.GetLength(0) - 1].height;
-            var hasCircleOnTop = b[0, b.GetLength(0) - 1].IsConcave;
-            ChessType color = b[0, b.GetLength(0) - 1].chessType;
-            for (int j = 0; j < b.GetLength(0); j++)
+            var isConcave = b[0, b.GetLength(0) - 1].IsConcave;
+            ChessType chessType = b[0, b.GetLength(0) - 1].chessType;
+            for (int j = 1; j < b.GetLength(0); j++)
             {
-                if (b[j, b.GetLength(0) - 1 - j] != null && b[j, b.GetLength(0) - 1 - j].baseShape != baseShape)
+                if (b[j, b.GetLength(0) - 1 - j] == null || b[j, b.GetLength(0) - 1 - j].baseShape != baseShape || b[j,b.GetLength(0) - 1 - j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, b.GetLength(0) - 1 - j] != null && b[j, b.GetLength(0) - 1 - j].height != height)
+                if (b[j, b.GetLength(0) - 1 - j] == null || b[j, b.GetLength(0) - 1 - j].height != height || b[j,b.GetLength(0) - 1 - j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
 
             for (int j = 0; j < b.GetLength(0); j++)
             {
-                if (b[j, b.GetLength(0) - 1 - j] != null &&
-                    b[j, b.GetLength(0) - 1 - j].IsConcave != hasCircleOnTop)
+                if (b[j, b.GetLength(0) - 1 - j] == null ||
+                    b[j, b.GetLength(0) - 1 - j].IsConcave != isConcave || b[j,b.GetLength(0) - 1 - j].chessType != chessType)
                     break;
                 if (j == b.GetLength(1) - 1)
                 {
-                    return color;
+                    print("return "+chessType);
+                    return chessType;
                 }
             }
         }

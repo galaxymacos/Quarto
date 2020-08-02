@@ -32,6 +32,11 @@ public class ChessPlayer : MonoBehaviour
         ChessBoard.instance.board[chessBoardCube.colNum, chessBoardCube.rowNum] = currentPickChess;
         ChessBoard.instance.RefreshBoard();
         currentPickChess = null;
+        if (ChessBoard.instance.CheckVictoryCondition(ChessBoard.instance.board) == ChessType.White)
+        {
+            print("Player Win");
+            return;
+        }
         TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
 
         TurnManager.instance.currentState = TurnManager.State.PlayerPickForAI;
