@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Packages.Rider.Editor.UnitTesting;
 using UnityEngine;
@@ -95,8 +96,103 @@ public class AIChessPlayer : MonoBehaviour
     }
 
 
+    private List<Tuple<int,int>> GetRidOfUnqualifiedPlaces()
+    {
+        List<Tuple<int, int>> result = new List<Tuple<int, int>>();
+        
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                // top left
+                if (i >= 1 && j >= 1)
+                {
+                    if (ChessBoard.instance.board[i - 1, j - 1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+
+                // left
+                if (i >= 1)
+                {
+                    if (ChessBoard.instance.board[i - 1, j] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+                // bottom left
+                if (i >= 1 && j <= 2)
+                {
+                    if (ChessBoard.instance.board[i - 1, j+1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+                // top right
+                if (i <=2  && j >= 1)
+                {
+                    if (ChessBoard.instance.board[i + 1, j - 1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+
+                // right
+                if (i <= 2)
+                {
+                    if (ChessBoard.instance.board[i + 1, j] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+                // bottom right
+                if (i <= 2 && j <= 2)
+                {
+                    if (ChessBoard.instance.board[i+1, j+1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+                // top
+                if (j >= 1)
+                {
+                    if (ChessBoard.instance.board[i, j - 1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+                // bottom
+                if (j <= 2)
+                {
+                    if (ChessBoard.instance.board[i, j + 1] != null)
+                    {
+                        result.Add(new Tuple<int, int>(i, j));
+                        continue;
+                    }
+                }
+                
+            }
+        }
+
+        return result;
+    }
+
     public int Evaluate()
     {
+
         for (int i = 0; i < ChessBoard.instance.board.GetLength(0); i++)
         {
             if (ChessBoard.instance.board[i, 0] == null) continue;
@@ -112,8 +208,13 @@ public class AIChessPlayer : MonoBehaviour
                 }
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
-                }
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }                }
             }
 
             for (int j = 0; j < ChessBoard.instance.board.GetLength(1); j++)
@@ -122,7 +223,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -132,7 +239,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
         }
@@ -150,7 +263,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -160,7 +279,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -170,7 +295,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
         }
@@ -187,7 +318,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -197,7 +334,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -207,7 +350,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
         }
@@ -224,7 +373,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -234,7 +389,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
 
@@ -245,7 +406,13 @@ public class AIChessPlayer : MonoBehaviour
                     break;
                 if (j == ChessBoard.instance.board.GetLength(1) - 1)
                 {
-                    return color == ChessType.Black ? 1000 : -1000;
+                    switch (color)
+                    {
+                        case ChessType.Black:
+                            return 1000;
+                        case ChessType.White:
+                            return -1000;
+                    }
                 }
             }
         }
@@ -345,42 +512,36 @@ public class AIChessPlayer : MonoBehaviour
     {
         
         print("AI is thinking...");
-        int bestVal = -1000;
-        Move bestMove = new Move();
-        bestMove.row = -1;
-        bestMove.col = -1;
+        int bestVal = Int32.MinValue;
+        Move bestMove = new Move {row = -1, col = -1};
 
         // Traverse all cells, evaluate minimax function  
         // for all empty cells. And return the cell  
         // with optimal value.
         int passTime = 0;
-        for (int i = 0; i < 4; i++)
+        
+        var placesToCheck = GetRidOfUnqualifiedPlaces();
+        foreach (var cell in placesToCheck)
         {
-            for (int j = 0; j < 4; j++)
-            {
-                // Check if cell is empty 
-                if (ChessBoard.instance.board[i, j] == null)
+            int i = cell.Item1;
+            int j = cell.Item2;
+            // Check if cell is empty 
+                passTime++;
+                ChessBoard.instance.board[i, j] = currentPickChess;
+                ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
+                int moveVal = MiniMax( 0, false);
+                ChessBoard.instance.availableBlackChess.Add(currentPickChess);
+
+                if (moveVal > bestVal)
                 {
-                    passTime++;
-                    ChessBoard.instance.board[i, j] = currentPickChess;
-                    ChessBoard.instance.availableBlackChess.Remove(currentPickChess);
-                    minimaxTime = 0;
-                    int moveVal = MiniMax( 0, false);
-                    print("Minimax time: "+minimaxTime);
-                    minimaxTime = 0;
-                    ChessBoard.instance.availableBlackChess.Add(currentPickChess);
-
-                    if (moveVal > bestVal)
-                    {
-                        bestMove.row = i;
-                        bestMove.col = j;
-                        bestVal = moveVal;
-                    }
-
-                    ChessBoard.instance.board[i, j] = null;
+                    bestMove.row = i;
+                    bestMove.col = j;
+                    bestVal = moveVal;
                 }
-            }
+
+                ChessBoard.instance.board[i, j] = null;
         }
+                
         
         print("how many place to choose from: "+passTime);
 
